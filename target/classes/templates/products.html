@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="products">
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/products}">Products</a></li>
+            <li><a th:href="@{/order}">Order</a></li>
+            <li><a th:href="@{/order/orderdetails}">Order Details</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+    <h2>Available Products</h2>
+
+    <div th:each="product : ${products}" class="product-item">
+        <!-- Dynamic image loading -->
+        <img th:src="@{'/' + ${product.productImage}}" alt="Product Image">
+
+        <h3 th:text="${product.productName}"></h3>
+        <p th:text="${product.productDescription}"></p>
+        <p th:text="'Size: ' + ${product.productSize.displayName}"></p>
+        <p th:text="'Category: ' + ${product.productCategory.displayName}"></p>
+        <p th:text="'Price: $' + ${product.productPrice}"></p>
+        <form th:action="@{'/order/add/' + ${product.productId}}" method="post">
+            <button type="submit">Add to Order</button>
+        </form>
+
+        <a th:href="@{'/products/' + ${product.productId}}">View Details</a>
+
+        <hr>
+    </div>
+</div>
+
+</body>
+</html>
